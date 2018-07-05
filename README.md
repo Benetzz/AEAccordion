@@ -15,16 +15,11 @@
 
 ![AEAccordion](http://tadija.net/public/AEAccordion.gif)
 
-## Index
-- [Features](#features)
-- [Usage](#usage)
-- [Installation](#installation)
-- [License](#license)
-
 ## Features
 - Create accordion effect in table view controller with less effort
 - Animate expansion / collapsing of cells as you want *(optional)*
 - Automatic scroll on cell expansion to make entire cell visible *(optional)*
+- Block/Allow cells to expand
 
 ## Usage
 
@@ -149,7 +144,7 @@ override func shouldExpandeCell(_ tableView: UITableView, shouldExpandCellAt ind
 - [CocoaPods](http://cocoapods.org/):
 
 	```ruby
-	pod 'AEAccordion'
+	pod 'AEAccordion', :git => 'https://github.com/Benetzz/AEAccordion.git'
 	```
 
 ## License
