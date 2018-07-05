@@ -59,9 +59,9 @@ final class ReadmeTableViewCell: AccordionTableViewCell {
 
 - Subclass `AccordionTableViewController` and configure cell height based on `expandedIndexPaths`.
 
-```swift
 import AEAccordion
 
+```Swift
 final class ReadmeTableViewController: AccordionTableViewController {
     
     override func viewDidLoad() {
@@ -83,6 +83,53 @@ final class ReadmeTableViewController: AccordionTableViewController {
 }
 ```
 
+- Subclass AccordionTableViewController and configure cell height based on expandedIndexPaths.
+
+```Swift
+import AEAccordion
+
+final class ReadmeTableViewController: AccordionTableViewController {
+    
+      override func viewDidLoad() {
+        super.viewDidLoad()
+        expandFirstCell()
+    }
+    
+      func expandFirstCell() {
+        let firstCellIndexPath = IndexPath(row: 0, section: 0)
+        expandedIndexPaths.append(firstCellIndexPath)
+    }
+    
+      // MARK: UITableViewDelegate
+    
+      override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return expandedIndexPaths.contains(indexPath) ? 200.0 : 50.0
+    }
+    
+}
+
+
+```
+
+- Override shouldExpandeCell to control expandable cells.
+
+```swift
+override func shouldExpandeCell(_ tableView: UITableView, shouldExpandCellAt indexPath: IndexPath) -> Bool {
+      
+
+        if let delegate = delegate {
+
+            return delegate.accordionViewController(self, shouldExpandCellAt: indexPath)
+
+        }else{
+
+            return true
+
+        }
+
+}
+```
+
 > For more details check out [Sources](Sources) and [Example](Example).
 
 ## Installation
@@ -90,13 +137,13 @@ final class ReadmeTableViewController: AccordionTableViewController {
 - [Swift Package Manager](https://swift.org/package-manager/):
 
 	```
-	.Package(url: "https://github.com/tadija/AEAccordion.git", majorVersion: 2)
+	.Package(url: "https://github.com/Benetzz/AEAccordion.git", majorVersion: 2)
 	```
 
 - [Carthage](https://github.com/Carthage/Carthage):
 
 	```ogdl
-	github "tadija/AEAccordion"
+	github "Benetzz/AEAccordion"
 	```
 
 - [CocoaPods](http://cocoapods.org/):
