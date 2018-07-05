@@ -7,11 +7,11 @@
 import UIKit
 
 /**
-    This class is used for accordion effect in `UITableViewController`.
-
-    Just subclass it and implement `tableView:heightForRowAtIndexPath:`
-    (based on information in `expandedIndexPaths` property).
-*/
+ This class is used for accordion effect in `UITableViewController`.
+ 
+ Just subclass it and implement `tableView:heightForRowAtIndexPath:`
+ (based on information in `expandedIndexPaths` property).
+ */
 open class AccordionTableViewController: UITableViewController {
     
     // MARK: Properties
@@ -22,7 +22,7 @@ open class AccordionTableViewController: UITableViewController {
     /// Flag that indicates if cell toggle should be animated. Defaults to `true`.
     open var isToggleAnimated = true
     
-    /// Flag that indicates if `tableView` should scroll after cell is expanded, 
+    /// Flag that indicates if `tableView` should scroll after cell is expanded,
     /// in order to make it completely visible (if it's not already). Defaults to `true`.
     open var shouldScrollIfNeededAfterCellExpand = true
     
@@ -35,11 +35,11 @@ open class AccordionTableViewController: UITableViewController {
     // MARK: Actions
     
     /**
-        Expand or collapse the cell.
-    
-        - parameter cell: Cell that should be expanded or collapsed.
-        - parameter animated: If `true` action should be animated.
-    */
+     Expand or collapse the cell.
+     
+     - parameter cell: Cell that should be expanded or collapsed.
+     - parameter animated: If `true` action should be animated.
+     */
     open func toggleCell(_ cell: AccordionTableViewCell, animated: Bool) {
         if cell.expanded {
             collapseCell(cell, animated: animated)
@@ -63,12 +63,17 @@ open class AccordionTableViewController: UITableViewController {
     /// `AccordionTableViewController` will animate cell to be expanded or collapsed.
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? AccordionTableViewCell {
-            toggleCell(cell, animated: isToggleAnimated)
+            let shouldExpand = self.shouldExpandeCell(tableView, shouldExpandCellAt: indexPath)
+            if (shouldExpand){
+                toggleCell(cell, animated: isToggleAnimated)
+            }
         }
+    }
+    open func shouldExpandeCell(_ tableView: UITableView, shouldExpandCellAt indexPath: IndexPath) -> Bool{
+        return true
     }
     
     // MARK: Helpers
-    
     private func expandCell(_ cell: AccordionTableViewCell, animated: Bool) {
         if let indexPath = tableView.indexPath(for: cell) {
             if !animated {
@@ -120,6 +125,7 @@ open class AccordionTableViewController: UITableViewController {
     }
     
     private func addToExpandedIndexPaths(_ indexPath: IndexPath) {
+        expandedIndexPaths.removeAll()
         expandedIndexPaths.append(indexPath)
     }
     
@@ -132,7 +138,7 @@ open class AccordionTableViewController: UITableViewController {
     private func scrollIfNeededAfterExpandingCell(at indexPath: IndexPath) {
         guard shouldScrollIfNeededAfterCellExpand,
             let cell = tableView.cellForRow(at: indexPath) as? AccordionTableViewCell else {
-            return
+                return
         }
         let cellRect = tableView.rectForRow(at: indexPath)
         let isCompletelyVisible = tableView.bounds.contains(cellRect)
@@ -140,5 +146,5 @@ open class AccordionTableViewController: UITableViewController {
             tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
-
+    
 }
